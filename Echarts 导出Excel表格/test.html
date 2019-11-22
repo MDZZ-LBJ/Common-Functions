@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+
+</head>
+<body>
+
+
+
+<div id="main" style="width: 300px;height:200px;"></div>
+<button id="btn">导出</button>
+
+<!-- 引入 jquery,echarts,JsonExportExcel.min.js -->
+<!-- https://pan.baidu.com/s/1xCshHOJ6ZXZtyQFDT5UPQA-->
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.common.js"></script>
+<script src="JsonExportExcel.min.js"></script>
+
+
+
+<script type="text/javascript">
+
+    数据源
+    let data=[{name:"衬衫",value:5},{name:"羊毛衫",value:20},{name:"雪纺衫",value:36},{name:"裤子",value:10},{name:"高跟鞋",value:10},{name:"袜子",value:20}]
+    let data1=[]
+    let data2=[]
+    data.map((item)=>{
+        data1.push(item.name)
+        data2.push(item.value)
+    })
+
+    导出excel使用的数据
+    var option1 = {};
+    option1.fileName = 'excel'
+    option1.datas = [
+        {
+            sheetData: data,
+            sheetName: 'sheet',
+            sheetFilter: ['name','value'],
+            sheetHeader: ['类别','销量']
+        }
+    ];
+    document.querySelector('#btn').onclick=function() {
+        var toExcel = new ExportJsonExcel(option1);
+        toExcel.saveExcel();
+    }
+
+
+    渲染echarts
+    var myChart = echarts.init(document.getElementById('main'));
+    var option = {
+        title: {
+            text: 'ECharts导出excel'
+        },
+        xAxis: {
+            data:data1
+        },
+        yAxis: {},
+        series: [{
+            name: '销量',
+            type: 'bar',
+            data: data2
+        }]
+    };
+
+    myChart.setOption(option);
+
+</script>
+</body>
+</html>
+</body>
+</html>
